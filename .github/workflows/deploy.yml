@@ -22,11 +22,12 @@ jobs:
           username: ${{ secrets.DOCKER_USER_LEVIATHAN }}
           password: ${{ secrets.DOCKER_PASSWORD_LEVIATHAN }}
           
-      - name: Verificar contenido del directorio
-        run: |
-          ls -la
-          echo "Contenido de digitalocean/"
-          ls -la digitalocean  
+      #- name: Verificar contenido del directorio
+      #  run: |
+      #    ls -la
+      #    echo "Contenido de digitalocean/"
+      #    ls -la digitalocean  
+
       - name: Build Docker image Digital Ocean
         run: |
           docker build -f digitalocean/Dockerfile -t ${{ secrets.DOCKER_USER_LEVIATHAN }}/digitalocean:latest digitalocean/
@@ -34,6 +35,28 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USER_LEVIATHAN }}/digitalocean:latest
+      #--------------------------------------
+      - name: Build and push Docker image for EC2
+        run: |
+           docker build -f ec2/Dockerfile -t ${{ secrets.DOCKER_USER_LEVIATHAN }}/ec2:latest ec2/
+           docker push ${{ secrets.DOCKER_USER_LEVIATHAN }}/ec2:latest
+      #--------------------------------------
+      - name: Build and push Docker image for Heroku
+        run: |
+           docker build -f heroku/Dockerfile -t ${{ secrets.DOCKER_USER_LEVIATHAN }}/heroku:latest heroku/
+           docker push ${{ secrets.DOCKER_USER_LEVIATHAN }}/heroku:latest
+      #--------------------------------------
+      - name: Build and push Docker image for Railway
+        run: |
+           docker build -f railway/Dockerfile -t ${{ secrets.DOCKER_USER_LEVIATHAN }}/railway:latest railway/
+           docker push ${{ secrets.DOCKER_USER_LEVIATHAN }}/railway:latest
+      #--------------------------------------
+
+      - name: Build and push Docker image for Render
+        run: |
+           docker build -f render/Dockerfile -t ${{ secrets.DOCKER_USER_LEVIATHAN }}/render:latest render/
+           docker push ${{ secrets.DOCKER_USER_LEVIATHAN }}/render:latest
+      #--------------------------------------
 
       - name: Prepare SSH key
         run: |
