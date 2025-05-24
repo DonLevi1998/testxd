@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Chiste Aleatorio</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        button { padding: 10px 20px; font-size: 16px; }
+        #joke { margin-top: 20px; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <h1>😂 Chiste de Programación</h1>
+    <button onclick="getJoke()">Obtener Chiste</button>
+    <div id="joke">Haz clic para ver un chiste...</div>
+
+    <script>
+        async function getJoke() {
+            try {
+                const res = await fetch("/joke");
+                const data = await res.json();
+                document.getElementById("joke").textContent = data.joke || data.error;
+            } catch (err) {
+                document.getElementById("joke").textContent = "Error, try again.";
+            }
+        }
+    </script>
+
+</body>
+</html>
